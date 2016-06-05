@@ -66,8 +66,7 @@ public class HabitsCSVExporter
 
         for(Habit h : habits)
         {
-            String sane = sanitizeFilename(h.name);
-            String habitDirName = String.format("%03d %s", h.position + 1, sane);
+            String habitDirName = String.format("%03d %s", h.position + 1, removeSpecialCharacters(h.name));
             habitDirName = habitDirName.trim() + "/";
 
             new File(exportDirName + habitDirName).mkdirs();
@@ -156,5 +155,16 @@ public class HabitsCSVExporter
             new File(exportDirName + filename).delete();
 
         new File(exportDirName).delete();
+    }
+    /**
+     * Returns a string without the special characters.
+     *
+     * @param name the string where the special characters should be removed
+     *             *
+     * @return name without the special characters
+     * */
+    public static String removeSpecialCharacters(String name)
+    {
+        return name.replaceAll("[^\\p{L}\\p{Z}]","");
     }
 }
